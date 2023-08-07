@@ -1,12 +1,15 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class WindowSnake extends JFrame {
 
-    public WindowSnake(){
+    public WindowSnake(){//вызывает окно самой игры
         setTitle("Змейка");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(320,345);
-        setLocation(400,400);
+        Dimension sSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setSize(sSize);
+        setLocationRelativeTo(null);
+
         add(new GameField());
         setVisible(true);
     }

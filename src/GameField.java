@@ -27,7 +27,7 @@ public class GameField extends JPanel implements ActionListener{
     private int[] y = new int[ALL_DOTS];
 
 
-    public GameField(){
+    public GameField(){ //вызывает само поле
         Color sand= new Color(211,147,33);
         setBackground(sand);
         loadImages();
@@ -70,11 +70,14 @@ public class GameField extends JPanel implements ActionListener{
             }
         } else{
             String str = "Game Over";
-            g.setColor(Color.white);
-            g.drawString(str,125,SIZE/2);
+           g.setColor(Color.BLACK);
+           ;
+
+           g.drawString(str,125,SIZE/2);
+
         }
     }
-
+   
     public void move(){
         for (int u = dots; u > 0; u--) {
             x[u] = x[u-1];
