@@ -23,10 +23,8 @@ public class GameField extends JPanel implements ActionListener{
     private Image tv;
     private Image tg;
     private Image tail;
-
     private int foodX;
     private int foodY;
-
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int width = (int)screenSize.getWidth();
     int height = (int)screenSize.getHeight();
@@ -40,16 +38,8 @@ public class GameField extends JPanel implements ActionListener{
     private boolean up =  true;
     private boolean down = false;
     boolean inGame = true;
-
- int ab=0;
-
-
-    //размер 1 ячейки
+    int isDead=0;
     private final int DOT_SIZE = 16;
-    //всего ячеек на поле
-
-    //private final int ALL_DOTS = 1000;
-
     private final int ALL_DOTS = WIDTH/16*HEIGHT/16;
     //положение змейки
     private final int[] x = new int[ALL_DOTS];
@@ -57,9 +47,8 @@ public class GameField extends JPanel implements ActionListener{
     //размер змейки в данное время
     private int dots;
 
-
-    public GameField(){ //вызывает само поле
-
+    public GameField(){
+        //вызывает само игровое поле
         setBackground(new Color(211,147,33));
         loadImages();
         initGame();
@@ -69,39 +58,20 @@ public class GameField extends JPanel implements ActionListener{
     }
 
     public void initGame(){
-//        if(width>WIDTH){
-//            for(int i;i<width;i=i+16){
-//
-//            }
-
-     //   }
-
-
-
         dots = 3;
         for (int u = 0; u < dots; u++) {
             x[u] = WIDTH/2 - u*DOT_SIZE;
             y[u] = HEIGHT/2;
-
-head = a;
-            tail =tv;
-
-
-
-        }
+            head = a;
+                  }
         timer = new Timer(100,this);
         timer.start();
         createFood();
     }
-
     public void createFood(){
-
-
         foodX = new Random().nextInt(WIDTH/16)*DOT_SIZE;
         foodY = new Random().nextInt(HEIGHT/16)*DOT_SIZE;
-
     }
-
     public void loadImages(){
         ImageIcon food1 = new ImageIcon("food.png");
         food = food1.getImage();
@@ -116,27 +86,15 @@ head = a;
         ImageIcon head2 = new ImageIcon("head2.png");
         ImageIcon head3 = new ImageIcon("head3.png");
         head = b;
-                a=head0.getImage();
-                b=head1.getImage();
-                v=head2.getImage();
-                g=head3.getImage();
-        ImageIcon tail0 = new ImageIcon("tail.png");
-        ImageIcon tail1 = new ImageIcon("tail1.png");
-        ImageIcon tail2 = new ImageIcon("tail2.png");
-        ImageIcon tail3 = new ImageIcon("tail3.png");
-
-        tail = tb;
-                ta=tail0.getImage();
-                tb=tail1.getImage();
-                tg=tail3.getImage();
-                tv=tail2.getImage();
+        a=head0.getImage();
+        b=head1.getImage();
+        v=head2.getImage();
+        g=head3.getImage();
     }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        if(inGame && ab==0){
+        if(inGame && isDead==0){
             g.drawImage(food,foodX,foodY,this);
             for (int u = 0; u < dots; u++) {
 
@@ -145,7 +103,6 @@ head = a;
                 }
                 else if(u==dots-1) {
                     g.drawImage(tail,x[u],y[u],this);
-
                 }
                     else{
                     g.drawImage(snakedot,x[u],y[u],this);
@@ -153,35 +110,13 @@ head = a;
             }
 
         }
-
-        else if(inGame==false && ab==0){
-            ab++;
-
-            if(ab==1){
+        else if(inGame==false && isDead==0){
+            isDead++;
+            if(isDead==1){
            endFrame();
-
-
-
-
                    }
         }
     }
-//    public void contur(){
-//        if (x>WIDTH){
-//
-//        }
-//        if (x<WIDTH){
-//
-//        }
-//        if(y>HEIGHT){
-//
-//        }
-//        if(y<HEIGHT){
-//
-//        }
-
-
-  //  }
         public void endFrame() {
             JFrame frame1 = new JFrame();
             JPanel panel1 = new JPanel();
@@ -196,11 +131,10 @@ head = a;
             but1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     inGame=true;
-                    ab=0;
+                    isDead=0;
                     setVisible(false);
                     frame1.dispose();
                 WindowSnake a = new WindowSnake();
-
                 }
             });
             panel1.add(but1,gbc);
@@ -212,13 +146,11 @@ head = a;
 
                 }
             });
-
             frame1.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame1.setUndecorated(true);
             panel1.setBackground(new Color(211,147,33));
             frame1.setVisible(true);
         }
-
     public void move() {
         for (int u = dots; u > 0; u--) {
             x[u] = x[u - 1];
@@ -236,21 +168,13 @@ head = a;
         if (down) {
             y[0] += DOT_SIZE;
         }
-//        if (x[dots] < x[dots - 1] ) {
-//            g.drawImage(tail, x[dots], y[dots], this);
-//        }
-
-
     }
-
-
         public void checkFood () {
             if (x[0] == foodX && y[0] == foodY) {
                 dots++;
                 createFood();
             }
         }
-
         public void checkCollisions () {
             for (int u = dots; u > 0; u--) {
                 if (u > 4 && x[0] == x[u] && y[0] == y[u]) {
@@ -289,7 +213,6 @@ head = a;
                 super.keyPressed(e);
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_LEFT && !right) {
-
                     head = g;
                     left = true;
                     up = false;
@@ -310,7 +233,6 @@ head = a;
                 }
                 if (key == KeyEvent.VK_DOWN && !up) {
                     head = v;
-
                     right = false;
                     down = true;
                     left = false;
